@@ -1,25 +1,22 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+import { routerList } from "./common/config/routers/routerList";
+import { routerPath } from "./common/constants/routerPath";
+import { IRoute } from "./common/interfaces/RouterModel";
+import "./common/sass/App.scss";
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        {routerList.map((route: IRoute, index: number) => {
+          return (
+            <Route path={route.path} element={route.element} key={index} />
+          );
+        })}
+        <Route path="*" element={<Navigate to={routerPath.common.HOME} />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
