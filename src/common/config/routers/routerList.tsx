@@ -1,3 +1,6 @@
+import { CommentDetailPage } from "../../../pages/Comment/CommentDetail/CommentDetailPage";
+import { CommentListPage } from "../../../pages/Comment/CommentList/CommentListPage";
+import { NewCommentPage } from "../../../pages/Comment/NewComment/NewCommentPage";
 import { HomePage } from "../../../pages/Home/HomePage";
 import { Test } from "../../../pages/Test/Test";
 import { NewUserPage } from "../../../pages/User/NewUser/NewUserPage";
@@ -20,8 +23,20 @@ export const routerList: IRoute[] = [
     element: <UserDetailPage />,
   },
   {
-    path: routerPath.data.NEW_USER,
+    path: routerPath.data.USER_NEW,
     element: <NewUserPage />,
+  },
+  {
+    path: routerPath.data.COMMENT_LIST,
+    element: <CommentListPage />,
+  },
+  {
+    path: routerPath.data.COMMENT_DETAIL,
+    element: <CommentDetailPage />,
+  },
+  {
+    path: routerPath.data.COMMENT_NEW,
+    element: <NewCommentPage />,
   },
   {
     path: routerPath.test.TEST,

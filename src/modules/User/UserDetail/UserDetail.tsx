@@ -61,9 +61,9 @@ export const UserDetail = () => {
     );
   };
 
-  const handleClickUpdateUserList = (e: React.MouseEvent) => {
+  const handleClickUpdateUserList = async (e: React.MouseEvent) => {
     e.preventDefault();
-    dispatch(
+    await dispatch(
       updateUserById({
         updatedUser: userDetail,
         userId: parseInt(id as string),

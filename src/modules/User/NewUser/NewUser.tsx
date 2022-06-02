@@ -25,7 +25,7 @@ export const NewUser = () => {
   const navigate = useNavigate();
 
   const lastUserId = userList[userList.length - 1].id;
-  const handleSubmitNewUserForm = (values: IUserInputAttributes) => {
+  const handleSubmitNewUserForm = async (values: IUserInputAttributes) => {
     const newUserObj: IUser = {
       id: lastUserId + 1,
       name: values.name,
@@ -49,7 +49,7 @@ export const NewUser = () => {
         bs: values.companyBs,
       },
     };
-    dispatch(addNewUserToDB(newUserObj));
+    await dispatch(addNewUserToDB(newUserObj));
     !isLoading && navigate(routerPath.data.USER_LIST);
   };
 

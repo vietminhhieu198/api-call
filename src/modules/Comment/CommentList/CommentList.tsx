@@ -1,9 +1,4 @@
-import React, { useEffect, useState } from "react";
-import { Navbar } from "../../../components/Navbar/Navbar";
-import {
-  useAppDispatch,
-  useAppSelector,
-} from "../../../common/hooks/ReduxHook";
+import { Add, Delete, Edit } from "@mui/icons-material";
 import {
   Button,
   Paper,
@@ -15,29 +10,33 @@ import {
   TablePagination,
   TableRow,
 } from "@mui/material";
-import { Add, Delete, Edit } from "@mui/icons-material";
-
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { COMMENT_TABLE_HEAD } from "../../../common/constants";
+import { routerPath } from "../../../common/constants/routerPath";
+import { capitalizeFirstLetter } from "../../../common/helper/string";
 import {
-  IUserDataTable,
-  IdUserType,
-  IUserColumn,
+  useAppDispatch,
+  useAppSelector,
+} from "../../../common/hooks/ReduxHook";
+import {
+  ICommentColumn,
+  ICommentDataTable,
+  IdCommentType,
   IFunctionSB,
 } from "../../../common/interfaces/TableMuiModel";
-import { capitalizeFirstLetter } from "../../../common/helper/string";
-import { USER_TABLE_HEAD } from "../../../common/constants";
-import { Link } from "react-router-dom";
-import { routerPath } from "../../../common/constants/routerPath";
-import { RootState } from "../../../redux/store";
-import {
-  deleteUserById,
-  getUserDetailById,
-  getUserList,
-} from "../../../redux/features/user/userSlice";
+import { Navbar } from "../../../components/Navbar/Navbar";
 import { SnackbarMUI } from "../../../components/Snackbar/Snackbar";
+import {
+  deleteCommentById,
+  getCommentDetailById,
+  getCommentList,
+} from "../../../redux/features/comment/commentSlice";
+import { RootState } from "../../../redux/store";
 
-export const UserList = () => {
-  const { userList, isLoading } = useAppSelector(
-    (state: RootState) => state.user
+export const CommentList = () => {
+  const { commentList, isLoading } = useAppSelector(
+    (state: RootState) => state.comment
   );
   const dispatch = useAppDispatch();
 
@@ -48,34 +47,32 @@ export const UserList = () => {
     useState<IFunctionSB>("empty");
 
   useEffect(() => {
-    dispatch(getUserList());
+    dispatch(getCommentList());
   }, [dispatch]);
 
-  const userColumns = USER_TABLE_HEAD.map((item): IUserColumn => {
-    const userLabel =
+  const commentColumns = COMMENT_TABLE_HEAD.map((item): ICommentColumn => {
+    const commentLabel =
       item === "id" ? item.toUpperCase() : capitalizeFirstLetter(item);
-    return { id: item as IdUserType, label: userLabel };
+    return { id: item as IdCommentType, label: commentLabel };
   });
 
-  function createUserData(
+  function createCommentData(
     id: number,
+    postId: number,
     name: string,
-    username: string,
     email: string,
-    address: string,
-    phone: string
-  ): IUserDataTable {
-    return { id, name, username, email, address, phone };
+    body: string
+  ): ICommentDataTable {
+    return { id, postId, name, email, body };
   }
 
-  const userRows = userList?.map((item) => {
-    return createUserData(
+  const commentRows = commentList?.map((item) => {
+    return createCommentData(
       item.id,
+      item.postId,
       item.name,
-      item.username,
       item.email,
-      item.address.city,
-      item.phone
+      item.body
     );
   });
 
@@ -90,13 +87,13 @@ export const UserList = () => {
     setPage(0);
   };
 
-  const handleClickEditButton = (userId: number) => {
-    dispatch(getUserDetailById(userId));
+  const handleClickEditButton = (commentId: number) => {
+    dispatch(getCommentDetailById(commentId));
   };
 
-  const handleClickDeleteButton = async (userId: number) => {
-    await dispatch(deleteUserById(userId));
-    await dispatch(getUserList());
+  const handleClickDeleteButton = async (commentId: number) => {
+    await dispatch(deleteCommentById(commentId));
+    await dispatch(getCommentList());
     setOpenSnackbar(true);
     setFunctionSnackbar("delete");
   };
@@ -123,17 +120,17 @@ export const UserList = () => {
                     align="center"
                     colSpan={7}
                   >
-                    User List
+                    Comment List
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  {userColumns.map((column) => (
+                  {commentColumns.map((column) => (
                     <TableCell key={column.id}>{column.label}</TableCell>
                   ))}
                 </TableRow>
               </TableHead>
               <TableBody>
-                {userRows
+                {commentRows
                   .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                   .map((row) => {
                     return (
@@ -143,7 +140,7 @@ export const UserList = () => {
                         tabIndex={-1}
                         key={row.id}
                       >
-                        {userColumns.map((column) => {
+                        {commentColumns.map((column) => {
                           const value = row[column.id];
                           if (value) {
                             return (
@@ -157,7 +154,7 @@ export const UserList = () => {
                             return (
                               <TableCell key={column.id}>
                                 <Link
-                                  to={`${routerPath.data.USER_LIST}${row.id}`}
+                                  to={`${routerPath.data.COMMENT_LIST}${row.id}`}
                                   onClick={() => handleClickEditButton(row.id)}
                                 >
                                   <Button
@@ -191,7 +188,7 @@ export const UserList = () => {
               </TableBody>
             </Table>
           </TableContainer>
-          <Link to={routerPath.data.USER_NEW}>
+          <Link to={routerPath.data.COMMENT_NEW}>
             <Button
               sx={{ marginLeft: "1rem", marginTop: "1rem" }}
               color="warning"
@@ -205,7 +202,7 @@ export const UserList = () => {
           <TablePagination
             rowsPerPageOptions={[5, 25, 100]}
             component="div"
-            count={userRows.length}
+            count={commentRows.length}
             rowsPerPage={rowsPerPage}
             page={page}
             onPageChange={handleChangePage}

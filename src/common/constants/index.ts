@@ -7,3 +7,12 @@ export const USER_TABLE_HEAD = [
   "phone",
   "status",
 ];
+
+export const COMMENT_TABLE_HEAD = [
+  "id",
+  "postId",
+  "name",
+  "email",
+  "body",
+  "status",
+];

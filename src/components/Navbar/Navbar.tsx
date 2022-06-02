@@ -16,12 +16,12 @@ import { routerPath } from "../../common/constants/routerPath";
 
 const pages = [
   {
-    name: "User",
+    name: "Users",
     path: routerPath.data.USER_LIST,
   },
   {
-    name: "TodoList",
-    path: routerPath.data.TODO_LIST,
+    name: "Comments",
+    path: routerPath.data.COMMENT_LIST,
   },
 ];
 

@@ -1,12 +1,12 @@
 import { Alert, Snackbar } from "@mui/material";
 import React from "react";
 import { capitalizeFirstLetter } from "../../common/helper/string";
-import { IFunction } from "../../common/interfaces/TableMuiModel";
+import { IFunctionSB } from "../../common/interfaces/TableMuiModel";
 
 interface SnackbarProps {
   open: boolean;
   setOpen: React.Dispatch<React.SetStateAction<boolean>>;
-  functionSB: IFunction;
+  functionSB: IFunctionSB;
 }
 
 export const SnackbarMUI: React.FC<SnackbarProps> = ({

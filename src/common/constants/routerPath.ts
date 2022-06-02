@@ -2,10 +2,10 @@ export const routerPath = {
   data: {
     USER_LIST: "/users/",
     USER_DETAIL: "/users/:id",
-    TODO_LIST: "/todos/",
-    TODO_DETAIL: "/todos/:id",
-    NEW_TODO: "/new/todos",
-    NEW_USER: "/new/users",
+    USER_NEW: "/new/user",
+    COMMENT_LIST: "/comments/",
+    COMMENT_DETAIL: "/comments/:id",
+    COMMENT_NEW: "/new/comment",
   },
   common: {
     HOME: "/",
