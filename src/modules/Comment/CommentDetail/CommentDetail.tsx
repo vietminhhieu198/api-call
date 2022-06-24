@@ -77,7 +77,6 @@ export const CommentDetail = () => {
       );
     });
   };
-  renderCommentDetail();
 
   return (
     <>

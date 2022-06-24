@@ -13,6 +13,7 @@ import CommentModel, {
   ICommentWithoutId,
 } from "../../../common/interfaces/CommentModel";
 import { GoBack } from "../../../components/GoBack/GoBack";
+import { Navbar } from "../../../components/Navbar/Navbar";
 import { addNewCommentToDB } from "../../../redux/features/comment/commentSlice";
 import { RootState } from "../../../redux/store";
 
@@ -38,6 +39,7 @@ export const NewComment = () => {
 
   return (
     <>
+      <Navbar />
       <GoBack pageLink={routerPath.data.COMMENT_LIST} />
       {!isLoading && (
         <Container className="px-4 py-12">

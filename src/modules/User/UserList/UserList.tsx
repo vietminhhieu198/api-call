@@ -34,6 +34,7 @@ import {
   getUserList,
 } from "../../../redux/features/user/userSlice";
 import { SnackbarMUI } from "../../../components/Snackbar/Snackbar";
+import { Container } from "@mui/system";
 
 export const UserList = () => {
   const { userList, isLoading } = useAppSelector(
@@ -105,113 +106,116 @@ export const UserList = () => {
     <>
       <Navbar />
       {!isLoading && (
-        <Paper
-          sx={{
-            width: "80%",
-            paddingBlock: "3rem",
-            paddingInline: "1rem",
-            margin: "auto",
-            marginBlock: "2.5rem",
-          }}
-        >
-          <TableContainer sx={{ maxHeight: 500 }}>
-            <Table stickyHeader aria-label="sticky table">
-              <TableHead>
-                <TableRow>
-                  <TableCell
-                    sx={{ fontSize: "2rem" }}
-                    align="center"
-                    colSpan={7}
-                  >
-                    User List
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  {userColumns.map((column) => (
-                    <TableCell key={column.id}>{column.label}</TableCell>
-                  ))}
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {userRows
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                  .map((row) => {
-                    return (
-                      <TableRow
-                        hover
-                        role="checkbox"
-                        tabIndex={-1}
-                        key={row.id}
-                      >
-                        {userColumns.map((column) => {
-                          const value = row[column.id];
-                          if (value) {
-                            return (
-                              <TableCell key={column.id} align={column.align}>
-                                {column.format && typeof value === "number"
-                                  ? column.format(value)
-                                  : value}
-                              </TableCell>
-                            );
-                          } else {
-                            return (
-                              <TableCell key={column.id}>
-                                <Link
-                                  to={`${routerPath.data.USER_LIST}${row.id}`}
-                                  onClick={() => handleClickEditButton(row.id)}
-                                >
-                                  <Button
-                                    sx={{
-                                      marginRight: "1rem",
-                                    }}
-                                    color="info"
-                                    variant="contained"
-                                    startIcon={<Edit />}
+        <Container maxWidth="xl">
+          <Paper
+            sx={{
+              paddingBlock: "3rem",
+              paddingInline: "1rem",
+              margin: "auto",
+              marginBlock: "2.5rem",
+            }}
+          >
+            <TableContainer sx={{ maxHeight: 500 }}>
+              <Table stickyHeader aria-label="sticky table">
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      sx={{ fontSize: "2rem" }}
+                      align="center"
+                      colSpan={7}
+                    >
+                      User List
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    {userColumns.map((column) => (
+                      <TableCell key={column.id}>{column.label}</TableCell>
+                    ))}
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {userRows
+                    .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                    .map((row) => {
+                      return (
+                        <TableRow
+                          hover
+                          role="checkbox"
+                          tabIndex={-1}
+                          key={row.id}
+                        >
+                          {userColumns.map((column) => {
+                            const value = row[column.id];
+                            if (value) {
+                              return (
+                                <TableCell key={column.id} align={column.align}>
+                                  {column.format && typeof value === "number"
+                                    ? column.format(value)
+                                    : value}
+                                </TableCell>
+                              );
+                            } else {
+                              return (
+                                <TableCell key={column.id}>
+                                  <Link
+                                    to={`${routerPath.data.USER_LIST}${row.id}`}
+                                    onClick={() =>
+                                      handleClickEditButton(row.id)
+                                    }
                                   >
-                                    Edit
+                                    <Button
+                                      sx={{
+                                        marginRight: "1rem",
+                                      }}
+                                      color="info"
+                                      variant="contained"
+                                      startIcon={<Edit />}
+                                    >
+                                      Edit
+                                    </Button>
+                                  </Link>
+                                  <Button
+                                    onClick={() =>
+                                      handleClickDeleteButton(row.id)
+                                    }
+                                    color="error"
+                                    variant="contained"
+                                    startIcon={<Delete />}
+                                  >
+                                    Delete
                                   </Button>
-                                </Link>
-                                <Button
-                                  onClick={() =>
-                                    handleClickDeleteButton(row.id)
-                                  }
-                                  color="error"
-                                  variant="contained"
-                                  startIcon={<Delete />}
-                                >
-                                  Delete
-                                </Button>
-                              </TableCell>
-                            );
-                          }
-                        })}
-                      </TableRow>
-                    );
-                  })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-          <Link to={routerPath.data.USER_NEW}>
-            <Button
-              sx={{ marginLeft: "1rem", marginTop: "1rem" }}
-              color="warning"
-              variant="contained"
-              startIcon={<Add />}
-            >
-              Add new
-            </Button>
-          </Link>
+                                </TableCell>
+                              );
+                            }
+                          })}
+                        </TableRow>
+                      );
+                    })}
+                </TableBody>
+              </Table>
+            </TableContainer>
+            <Link to={routerPath.data.USER_NEW}>
+              <Button
+                sx={{ marginLeft: "1rem", marginTop: "1rem" }}
+                color="warning"
+                variant="contained"
+                startIcon={<Add />}
+              >
+                Add new
+              </Button>
+            </Link>
 
-          <TablePagination
-            rowsPerPageOptions={[5, 25, 100]}
-            component="div"
-            count={userRows.length}
-            rowsPerPage={rowsPerPage}
-            page={page}
-            onPageChange={handleChangePage}
-            onRowsPerPageChange={handleChangeRowsPerPage}
-          />
-        </Paper>
+            <TablePagination
+              rowsPerPageOptions={[5, 25, 100]}
+              component="div"
+              count={userRows.length}
+              rowsPerPage={rowsPerPage}
+              page={page}
+              onPageChange={handleChangePage}
+              onRowsPerPageChange={handleChangeRowsPerPage}
+            />
+          </Paper>
+        </Container>
       )}
       <SnackbarMUI
         open={openSnackbar}

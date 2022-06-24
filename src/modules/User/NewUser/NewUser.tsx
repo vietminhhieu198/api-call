@@ -16,6 +16,7 @@ import {
 import { RootState } from "../../../redux/store";
 import { addNewUserToDB } from "../../../redux/features/user/userSlice";
 import { useNavigate } from "react-router-dom";
+import { Navbar } from "../../../components/Navbar/Navbar";
 
 export const NewUser = () => {
   const { userList, isLoading } = useAppSelector(
@@ -55,6 +56,7 @@ export const NewUser = () => {
 
   return (
     <>
+      <Navbar />
       <GoBack pageLink={routerPath.data.USER_LIST} />
       {!isLoading && (
         <Container className="px-4 py-12">

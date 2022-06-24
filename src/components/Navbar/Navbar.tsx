@@ -9,10 +9,9 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
-import MenuIcon from "@mui/icons-material/Menu";
-
 import React from "react";
 import { routerPath } from "../../common/constants/routerPath";
+import MenuIcon from "@mui/icons-material/Menu";
 
 const pages = [
   {
